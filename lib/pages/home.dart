@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
           child:Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('Apollodoro 111', style: TextStyle(fontSize: 60,color: Colors.white)),
+              const Text('Apollodoro 111', style: TextStyle(fontSize: 55,color: Colors.white)),
 
               Image.asset('assets/Drafy.png', width: 300, height: 300),
 

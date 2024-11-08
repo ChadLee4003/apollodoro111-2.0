@@ -1,6 +1,7 @@
 import 'dart:async';
 import "dart:math";
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Countdown extends StatefulWidget {
   const Countdown({super.key});
@@ -10,14 +11,40 @@ class Countdown extends StatefulWidget {
 }
 
 class _CountdownState extends State<Countdown> {
-  int timerseconds=5;
-  int timerminutes=0;
+  int timerseconds=0;
+  int timerminutes=25;
   Timer? timer;
   String patterntime = 'Study Time';
   bool timeractive = false;
   String task = '';
   String motivation = '';
-  
+  int numberOfCycles = 0;
+  @override
+  void initState() {
+    _loadData();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _saveData();
+    super.dispose();
+  }
+
+  Future<void> _loadData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      numberOfCycles=prefs.getInt('number')??0;
+    });
+  }
+
+  Future<void> _saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setInt('number', numberOfCycles);
+
+  }
 
   void startTimer(){
     
@@ -28,16 +55,17 @@ class _CountdownState extends State<Countdown> {
           if(timerminutes==0){
             if(patterntime == 'Study Time'){
               setState(() {
-                timerseconds=7;
-                timerminutes=0;
+                timerseconds=0;
+                timerminutes=5;
                 patterntime='Break Time';
                 task=randomTask();
                 motivation=randomMotivation();
+                numberOfCycles++;
               });
             }else{
               setState(() {
-                timerseconds=5;
-                timerminutes=0;
+                timerseconds=0;
+                timerminutes=25;
                 patterntime='Study Time';
               });
             }
@@ -62,6 +90,8 @@ class _CountdownState extends State<Countdown> {
     timer?.cancel();
     timeractive = false;
   }
+
+  
 
 
   @override
@@ -113,6 +143,7 @@ class _CountdownState extends State<Countdown> {
               ),
               
               MaterialButton(onPressed:(){
+                timer?.cancel();
                 Navigator.pop(context);
               },
               color: Colors.grey,

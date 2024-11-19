@@ -38,6 +38,7 @@ dependencies:
   percent_indicator: ^4.0.1
   shared_preferences: ^2.3.2
   table_calendar: ^3.0.6
+  audioplayers: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,7 @@ flutter:
     - assets/spacebackground6.jpg
     - assets/spacebackground7.jpg
     - assets/spacebackgroundcalendar.png
+    - assets/notification.mp3
   
     
 
